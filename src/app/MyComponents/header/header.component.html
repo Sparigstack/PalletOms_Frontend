@@ -1,0 +1,13 @@
+<nav class="navbar navbar-expand navbar-dark bg-black px-2">
+    <div class="collapse navbar-collapse" width="100%" id="navbarNav">
+        <div class="side-nav-button p-2 me-3 text-light" (click)="sideNavToogle()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <img class="bg-white ms-3 me-4" src="../../../assets/images/wms-logo.png" alt="">
+        <span class="customername navbar-brand px-4">Welcome, {{UserName}}</span>
+
+    </div>
+    <span *ngIf="Company" class="companyname navbar-brand px-4">Connected with {{Company}} QuickBooks
+        Company</span>
+    <button class="btn btn-outline-light" (click)="signOut()">Logout</button>
+</nav>

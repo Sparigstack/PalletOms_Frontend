@@ -1,0 +1,53 @@
+<app-header (sideNavToogled)="sideNavStatus = $event;"></app-header>
+<main>
+    <app-sidenav [sideNavStatus]="sideNavStatus" [ngClass]="{'app-sidenav-open':sideNavStatus}"></app-sidenav>
+    <div class="display-area p-3" [ngClass]="{'display-shrink':sideNavStatus}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-7 setdiv">
+                    <div class="panel border bg-white">
+                        <div class="panel-heading bg-aliceblue text-start">
+                            <h4 class="p-3 m-0 font-weight-bold d-flex align-items-center" style="line-height: 42px;">
+                                Sync your QuickBooks
+                                account
+                                with
+                                Pallet OMS</h4>
+                        </div>
+                        <div class="card-border my-5">
+                            <div class="panel-body p-3 setcenter pt-4">
+                                <button (click)="loginTest()" class="btn-Login">Connect QuickBook</button>
+                            </div>
+                            <div class="panel-body p-3  pt-0" style="color: #1b3468;">
+                                <h5 class="setcenter pt-2">Modules that you can sync are as below:</h5>
+                                <div class="row" style="padding-left:0px;">
+                                    <ul class="d-flex justify-content-end">
+                                        <div class="row p-5 py-0 pt-2">
+                                            <div class="col-4">
+                                                <li>Customers</li>
+                                            </div>
+                                            <div class="col-4">
+                                                <li>Invoice</li>
+                                            </div>
+                                            <div class="col-4">
+                                                <li>Items</li>
+                                            </div>
+                                            <div class="col-4">
+                                                <li>Orders</li>
+                                            </div>
+                                            <div class="col-4">
+                                                <li>Payments </li>
+                                            </div>
+                                            <div class="col-4">
+                                                <li>Sales Person </li>
+                                            </div>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

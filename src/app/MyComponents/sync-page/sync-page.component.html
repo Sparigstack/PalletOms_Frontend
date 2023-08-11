@@ -1,0 +1,77 @@
+<app-sync-header (sideNavToogled)="sideNavStatus = $event;"></app-sync-header>
+<main>
+    <app-sidenav [sideNavStatus]="sideNavStatus" [ngClass]="{'app-sidenav-open':sideNavStatus}"></app-sidenav>
+    <div class="display-area p-3" [ngClass]="{'display-shrink':sideNavStatus}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9 col-md-7 setdiv">
+                    <div class="panel border bg-white ">
+                        <div class="panel-heading bg-aliceblue text-start row d-flex align-items-center mx-0">
+                            <div class="col-8">
+                                <h4 class="p-3 font-weight-bold m-0 d-flex align-items-center">Configure your Sync
+                                    criteria
+                                    with both systems</h4>
+                            </div>
+                            <div class="col-4 text-end ">
+                                <div class="p-3">
+                                    Frequency : <select [(ngModel)]="frequency" class="selectFrequency" #selectFrequency
+                                        (change)="onSelected(selectFrequency.value)">
+                                        <option>EveryDay</option>
+                                        <option>3 Days</option>
+                                        <option>5 Days</option>
+                                        <option>7 Days</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body  p-5">
+                            <div class="card-border px-3 py-4">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Modules</th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let s of syncDatas">
+                                        <tr>
+                                            <th scope="row">{{s.id}}</th>
+                                            <td>{{s.name}}</td>
+                                            <td>
+                                                <input (change)="onChangeInput($event)" [value]="1" [id]="s.id"
+                                                    [checked]="s.optionValue1" type="checkbox"><label>PalletOMS To
+                                                    QuickBooks</label>
+                                            </td>
+                                            <td>
+                                                <input (change)="onChangeInput($event)" type="checkbox" [value]="2"
+                                                    [id]="s.id" [checked]="s.optionValue2"><label>QuickBooks to
+                                                    PalletOMS</label>
+                                            </td>
+                                            <td>
+                                                <input (change)="onChangeInput($event)" type="checkbox" [value]="3"
+                                                    [id]="s.id" [checked]="s.optionValue3"><label>Both Ways</label>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="panel-body pb-0 setcenter" [ngStyle]="{'display':updatebtn}">
+                                    <button (click)="alertConfirmation()" style="width: 150px !important;"
+                                        class="btn-Login">Update</button>
+                                    <!-- <button (click)="Sync()" style="width: 150px !important;" class="btn-Login">Update</button> -->
+                                </div>
+                                <div class="panel-body pb-0 setcenter" [ngStyle]="{'display':savebtn}">
+                                    <button (click)="alertConfirmation()" style="width: 150px !important;"
+                                        class="btn-Login">Save</button>
+                                    <!-- <button (click)="Sync1()" style="width: 150px !important;" class="btn-Login">Save</button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

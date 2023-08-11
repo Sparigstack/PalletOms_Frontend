@@ -1,0 +1,63 @@
+<app-header (sideNavToogled)="sideNavStatus = $event;" [ngStyle]="{display:loading}"></app-header>
+<main [ngStyle]="{display:loading}">
+    <app-sidenav [sideNavStatus]="sideNavStatus" [ngClass]="{'app-sidenav-open':sideNavStatus}"></app-sidenav>
+    <div class="display-area p-3" [ngClass]="{'display-shrink':sideNavStatus}">
+        <div class="container px-0">
+            <div class="row">
+                <div class="col-lg-9 col-md-7 setdiv px-4" style="margin: 0;width: 100%;">
+                    <div class="panel border bg-white ">
+                        <div class="panel-heading bg-aliceblue text-start row mx-0">
+                            <div class="col-6">
+                                <h4 class="p-3 font-weight-bold m-0 d-flex align-items-center">Sync Status</h4>
+                            </div>
+                            <div class="col-6  align-items-center justify-content-end" [ngStyle]="{'display':refBtn}">
+                                <button (click)="refreshData()" style="width: 200px !important;"
+                                    class="btn btn-outline-light">Refresh</button>
+                            </div>
+                            <div class="col-6  align-items-center justify-content-end" [ngStyle]="{'display':bkBtn}">
+                                <button (click)="goBack()" style="width: 200px !important;"
+                                    class="btn btn-outline-light">Go
+                                    Back</button>
+                            </div>
+                        </div>
+                        <!-- <div class="panel-body py-3 pb-4 setcenter">
+                             <button (click)="refreshData()" style="width: 200px !important;"
+                                class="btn-Login">Refresh</button> 
+                         <button (click)="Sync1()" style="width: 150px !important;" class="btn-Login">Save</button> 
+                    </div> -->
+                        <div class="panel-body p-3 pb-0 pt-0">
+                            <div class="row mx-3">
+                                <div *ngFor="let item of syncCount" class="col-6 py-5 px-3">
+                                    <div class="card-border mx-0">
+                                        <div class="col-12 text-center bg-aliceblue py-2">
+                                            <h4 class="m-0">{{item.moduleName}}</h4>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="row py-3" *ngFor="let i of item.pkg">
+                                                <div class="col-12">
+                                                    <div class="row mx-2 px-3 d-flex align-content-center">
+                                                        <div class="col-12">
+                                                            <h6>{{i.dataWay}}</h6>
+                                                        </div>
+                                                        <div class="col-9 d-flex align-items-center">
+                                                            <progress id="progress-bar" aria-label="Content loading…"
+                                                                max="{{i.totalCount}}"
+                                                                value="{{i.processCount}}"></progress>
+                                                        </div>
+                                                        <div class="col-1">
+                                                            {{i.processCount}}/{{i.totalCount}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
