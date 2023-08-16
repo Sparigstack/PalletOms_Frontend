@@ -49,7 +49,7 @@ export class LoginComponent {
   loginTest() {
     this.spinner.show();
     sessionStorage.clear();
-    if (this.login.valid) {
+    if (this.login.valid && this.selectedCompany) {
       this.profile.storePassword(this.login.value.Password)
       this.profile.verifyProfile(this.login.value).subscribe({
         next: (result) => {

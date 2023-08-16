@@ -102,7 +102,6 @@ export class SyncPageComponent implements OnInit {
 
   onSelected(value: string): void {
     this.frequency = value;
-    console.log(this.frequency)
   }
   alertConfirmation() {
     Swal.fire({
@@ -150,10 +149,8 @@ export class SyncPageComponent implements OnInit {
       .saveSyncStatus(this.syncDatas, this.Username)
       .subscribe({
         next: (res) => {
-          console.log(res)
-          this.syncData.dataSync(this.Username).subscribe((res) => {
-            console.log(res)
-          })
+          // this.syncData.dataSync(this.Username).subscribe((res) => {
+          // })
           this.toast.success({
             detail: 'Success',
             summary: 'Configuration Updated Successfully',

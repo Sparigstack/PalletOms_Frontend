@@ -18,7 +18,6 @@ export class NewSyncPageComponent {
     this.username = this.login.getUserName()
     this.syncData.getTotalCount(this.username).subscribe({
       next: (res) => {
-        console.log(res.data.moduleSyncpkg)
         this.loading = ""
         this.spinner.hide()
         this.syncCount = res.data;

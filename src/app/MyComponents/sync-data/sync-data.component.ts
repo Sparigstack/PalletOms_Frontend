@@ -19,26 +19,23 @@ export class SyncDataComponent {
       next: (res) => {
         this.loading = ""
         this.spinner.hide()
-        this.syncCount = res.data;
-        this.totalCount = res.data;
-        console.log(res.data[0].moduleName, res.data[0].pkg)
+        this.syncCount = res.data.progressPkg;
+        this.totalCount = res.data.progressPkg;
       },
       error: (err) => {
         this.syncData.getSyncDataCount(this.username, true).subscribe({
           next: (res) => {
             this.loading = ""
             this.spinner.hide()
-            this.syncCount = res.data;
-            this.totalCount = res.data;
-            console.log(res.data[0].moduleName, res.data[0].pkg)
+            this.syncCount = res.data.progressPkg;
+            this.totalCount = res.data.progressPkg;
           }, error: (err) => {
             this.syncData.getSyncDataCount(this.username, true).subscribe({
               next: (res) => {
                 this.loading = ""
                 this.spinner.hide()
-                this.syncCount = res.data;
-                this.totalCount = res.data;
-                console.log(res.data[0].moduleName, res.data[0].pkg)
+                this.syncCount = res.data.progressPkg;
+                this.totalCount = res.data.progressPkg;
               },
               error: (err) => {
 
@@ -64,19 +61,24 @@ export class SyncDataComponent {
   refreshData() {
     this.spinner.show()
     this.syncData.getSyncDataCount(this.username, false).subscribe((res) => {
-      console.log(res.data)
       this.spinner.hide()
-      if (res.data && res.data.length > 0) {
-        for (let i = 0; i < res.data.length; i++) {
-          if (res.data[i].pkg && res.data[i].pkg.length > 0) {
-            for (let j = 0; j < res.data[i].pkg.length; j++) {
-              this.syncCount[i].pkg[j].processCount = res.data[i].pkg[j].processCount
-              if (this.syncCount[i].pkg[j].totalCount !== res.data[i].pkg[j].processCount) {
-                this.allItems = false
-                break;
-              } else {
-                this.allItems = true
-              }
+      if (res.data.progressPkg && res.data.progressPkg.length > 0) {
+        for (let i = 0; i < res.data.progressPkg.length; i++) {
+          if (res.data.progressPkg[i].pkg && res.data.progressPkg[i].pkg.length > 0) {
+            for (let j = 0; j < res.data.progressPkg[i].pkg.length; j++) {
+              this.syncCount[i].pkg[j].processCount = res.data.progressPkg[i].pkg[j].processCount
+              this.syncCount.forEach((syncItem: any, i: any) => {
+                syncItem.pkg.forEach((pkgItem: any, j: any) => {
+                  const totalCount = pkgItem.totalCount;
+                  const processCount = res.data.progressPkg[i].pkg[j].processCount;
+
+                  if (totalCount === processCount) {
+                    this.allItems = true
+                  } else {
+                    this.allItems = false
+                  }
+                });
+              });
             }
           }
         }
