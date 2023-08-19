@@ -62,6 +62,7 @@ export class LoginComponent {
             this.UserData = { "Username": result.Payload[0].userName, "AccessToken": result.Payload[0].access_token, "CompanyId": this.selectedCompany.CompanyId, "SsnNo": this.selectedCompany.CompanySSNO, "Password": this.profile.getPassword() }
             this.profile.SyncStatus(this.UserData).subscribe({
               next: (res) => {
+                sessionStorage.setItem('UserId', res.userID)
                 sessionStorage.removeItem('Password')
                 if (res.qbCompanyName && res.qbCompanyName != "undefined" && res.qbCompanyName != "") {
                   this.profile.storeCompanyName(res.qbCompanyName)

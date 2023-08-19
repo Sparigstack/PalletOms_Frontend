@@ -13,10 +13,12 @@ import { SyncDataService } from 'src/app/MyServices/sync-data.service';
   styleUrls: ['./new-sync-page.component.css']
 })
 export class NewSyncPageComponent {
+  USerID: any;
   ngOnInit(): void {
     this.loading = "none";
     this.username = this.login.getUserName()
-    this.syncData.getTotalCount(this.username).subscribe({
+    this.USerID = sessionStorage.getItem('UserId')
+    this.syncData.getTotalCount(this.USerID).subscribe({
       next: (res) => {
         this.loading = ""
         this.spinner.hide()

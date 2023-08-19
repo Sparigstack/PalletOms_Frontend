@@ -16,10 +16,10 @@
                                 <div class="p-3">
                                     Frequency : <select [(ngModel)]="frequency" class="selectFrequency" #selectFrequency
                                         (change)="onSelected(selectFrequency.value)">
-                                        <option>EveryDay</option>
-                                        <option>3 Days</option>
-                                        <option>5 Days</option>
-                                        <option>7 Days</option>
+                                        <option [value]="0">EveryDay</option>
+                                        <option [value]="1">3 Days</option>
+                                        <option [value]="2">5 Days</option>
+                                        <option [value]="3">7 Days</option>
                                     </select>
                                 </div>
                             </div>

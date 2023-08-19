@@ -11,11 +11,13 @@ import { SyncDataService } from 'src/app/MyServices/sync-data.service';
   styleUrls: ['./sync-data.component.css']
 })
 export class SyncDataComponent {
+  UserID: any;
   ngOnInit(): void {
     this.loading = "none";
     this.username = this.login.getUserName()
+    this.UserID = sessionStorage.getItem('UserId')
     this.spinner.show();
-    this.syncData.getSyncDataCount(this.username, true).subscribe({
+    this.syncData.getSyncDataCount(this.UserID, true).subscribe({
       next: (res) => {
         this.loading = ""
         this.spinner.hide()
@@ -23,14 +25,14 @@ export class SyncDataComponent {
         this.totalCount = res.data.progressPkg;
       },
       error: (err) => {
-        this.syncData.getSyncDataCount(this.username, true).subscribe({
+        this.syncData.getSyncDataCount(this.UserID, true).subscribe({
           next: (res) => {
             this.loading = ""
             this.spinner.hide()
             this.syncCount = res.data.progressPkg;
             this.totalCount = res.data.progressPkg;
           }, error: (err) => {
-            this.syncData.getSyncDataCount(this.username, true).subscribe({
+            this.syncData.getSyncDataCount(this.UserID, true).subscribe({
               next: (res) => {
                 this.loading = ""
                 this.spinner.hide()
@@ -62,7 +64,7 @@ export class SyncDataComponent {
   }
   refreshData() {
     this.spinner.show()
-    this.syncData.getSyncDataCount(this.username, false).subscribe({
+    this.syncData.getSyncDataCount(this.UserID, false).subscribe({
       next: (res) => {
         this.spinner.hide()
         if (res.data.progressPkg && res.data.progressPkg.length > 0) {

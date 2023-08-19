@@ -10,22 +10,25 @@ export class SyncDataService {
   //url = 'http://45.77.218.219:8081/api/';
   syncUrl = 'https://localhost:7185/api/SyncStatus/GetSyncStatus?UID=';
   constructor(private http: HttpClient) { }
-  getSyncData(Username: any): Observable<any> {
-    return this.http.get(`${this.url}Module?Username=${Username}`);
+  getSyncData(UserID: any): Observable<any> {
+    return this.http.get(`${this.url}Module?UserID=${UserID}`);
   }
   syncStatus(Uid: any): Observable<any> {
     return this.http.get(`${this.syncUrl}${Uid}`);
   }
-  saveSyncStatus(data: any, Username: any): Observable<any> {
-    return this.http.post(`${this.url}Module?Username=${Username}`, data);
+  saveSyncStatus(data: any, UserID: any, frequency: any): Observable<any> {
+    return this.http.post(`${this.url}Module?UserID=${UserID}&interval=${frequency}`, data,);
   }
-  getSyncDataCount(Username: any, First: boolean): Observable<any> {
-    return this.http.get(`${this.url}GetSyncData/SyncData?un=${Username}&Isfirst=${First}`);
+  getSyncDataCount(UserID: any, First: boolean): Observable<any> {
+    return this.http.get(`${this.url}GetSyncData/SyncData?UserID=${UserID}&Isfirst=${First}`);
   }
-  getTotalCount(Username: any): Observable<any> {
-    return this.http.get(`${this.url}ModuleDetails/ModuleDetails?un=${Username}`);
+  getTotalCount(UserID: any): Observable<any> {
+    return this.http.get(`${this.url}ModuleDetails/ModuleDetails?UserID=${UserID}`);
   }
-  dataSync(UserName: any): Observable<any> {
-    return this.http.get(`${this.url}Module/DataSync?Username=${UserName}`)
+  dataSync(UserID: any): Observable<any> {
+    return this.http.get(`${this.url}Module/DataSync?UserID=${UserID}`)
+  }
+  SetInterval(UserID: any, frequency: any): Observable<any> {
+    return this.http.get(`${this.url}Module/SetInterval?UserID=${UserID}&interval=${frequency}`)
   }
 }
