@@ -14,6 +14,7 @@ import { SyncDataService } from 'src/app/MyServices/sync-data.service';
 export class HomePageComponent implements OnInit {
   login!: FormGroup;
   UserName: any;
+  UserId: any;
   sideNavStatus: boolean = true;
   constructor(
     private profile: LoginServiceService,
@@ -28,8 +29,9 @@ export class HomePageComponent implements OnInit {
   loginTest() {
     this.spinner.show();
     this.UserName = this.profile.getUserName();
+    this.UserId = sessionStorage.getItem('UserId')
     window.location.href =
       'https://appcenter.intuit.com/connect/oauth2?client_id=ABYZAh4SKIkzIVe9aLvRngG0qZju1hYD0tXGm44HcY8F6NQWTF&response_type=code&scope=com.intuit.quickbooks.accounting&redirect_uri=https://localhost:7067/api/QBToken/GetQBToken&state=' +
-      this.UserName;
+      this.UserId;
   }
 }
