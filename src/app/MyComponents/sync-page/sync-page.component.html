@@ -1,4 +1,4 @@
-<app-sync-header (sideNavToogled)="sideNavStatus = $event;"></app-sync-header>
+<app-header (sideNavToogled)="sideNavStatus = $event;"></app-header>
 <main>
     <app-sidenav [sideNavStatus]="sideNavStatus" [ngClass]="{'app-sidenav-open':sideNavStatus}"></app-sidenav>
     <div class="display-area p-3" [ngClass]="{'display-shrink':sideNavStatus}">
@@ -41,18 +41,21 @@
                                             <th scope="row">{{s.id}}</th>
                                             <td>{{s.name}}</td>
                                             <td>
-                                                <input (change)="onChangeInput($event)" [value]="1" [id]="s.id"
+                                                <input (change)="onChangeInput($event)"
+                                                    [attr.data-ParentId]="s.parentID" [value]="1" [id]="s.id"
                                                     [checked]="s.optionValue1" type="checkbox"><label>PalletOMS To
                                                     QuickBooks</label>
                                             </td>
                                             <td>
                                                 <input (change)="onChangeInput($event)" type="checkbox" [value]="2"
-                                                    [id]="s.id" [checked]="s.optionValue2"><label>QuickBooks to
+                                                    [attr.data-ParentId]="s.parentID" [id]="s.id"
+                                                    [checked]="s.optionValue2"><label>QuickBooks to
                                                     PalletOMS</label>
                                             </td>
                                             <td>
                                                 <input (change)="onChangeInput($event)" type="checkbox" [value]="3"
-                                                    [id]="s.id" [checked]="s.optionValue3"><label>Both Ways</label>
+                                                    [attr.data-ParentId]="s.parentID" [id]="s.id"
+                                                    [checked]="s.optionValue3"><label>Both Ways</label>
                                             </td>
                                         </tr>
                                     </tbody>

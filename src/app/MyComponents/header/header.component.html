@@ -7,7 +7,7 @@
         <span class="customername navbar-brand px-4">Welcome, {{UserName}}</span>
 
     </div>
-    <span *ngIf="Company" class="companyname navbar-brand px-4">Connected with {{Company}} QuickBooks
+    <span *ngIf="Company" class="companyname navbar-brand px-4">Connected with <a>{{Company}}</a> QuickBooks
         Company</span>
     <button class="btn btn-outline-light" (click)="signOut()">Logout</button>
 </nav>

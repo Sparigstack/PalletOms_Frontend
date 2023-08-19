@@ -14,10 +14,28 @@ export class HeaderComponent {
   menuStatus: boolean = false;
   Company: any;
   UserName: any;
+  UserData: any;
   constructor(private route: Router, private login: LoginServiceService) { }
   ngOnInit(): void {
-    this.Company = this.login.getCompanyName();
     this.UserName = this.login.getUserName();
+    if (this.login.getCompanyName()) {
+      this.Company = this.login.getCompanyName();
+    } else {
+      this.UserData = { "Username": this.UserName, "AccessToken": "", "CompanyId": "", "SsnNo": "", "Password": "" }
+      this.login.SyncStatus(this.UserData).subscribe({
+        next: (res) => {
+          if (res.qbCompanyName && res.qbCompanyName != "undefined" && res.qbCompanyName != "") {
+            this.login.storeCompanyName(res.qbCompanyName)
+            this.Company = res.qbCompanyName
+          }
+        },
+        error: (err) => {
+          throw Error(err)
+        }
+      })
+    }
+
+
   }
   sideNavToogle() {
     this.menuStatus = !this.menuStatus;

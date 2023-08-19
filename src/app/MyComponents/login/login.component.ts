@@ -19,7 +19,7 @@ export class LoginComponent {
   ) { }
   type: string = 'password';
   isText: boolean = false;
-  eyeIcon: string = 'fa-eye-slash';
+  eyeIcon: string = 'fa-eye';
   formModal: any;
   login!: FormGroup;
   companyid: any = { "CompanyId": 0 }
@@ -28,9 +28,13 @@ export class LoginComponent {
 
   ngOnInit(): void {
     sessionStorage.clear();
-    this.profile.getCompany(this.companyid).subscribe((res) => {
-      this.companydata = res.Payload
-      this.selectedCompany = { "CompanyId": this.companydata[0].COMPANYID, "CompanySSNO": this.companydata[0].SSNNO }
+    this.profile.getCompany(this.companyid).subscribe({
+      next: (res) => {
+        this.companydata = res.Payload
+        this.selectedCompany = { "CompanyId": this.companydata[0].COMPANYID, "CompanySSNO": this.companydata[0].SSNNO }
+      }, error: (err) => {
+        throw Error(err)
+      }
     });
     this.login = this.fb.group({
       UserId: ['', Validators.required],
@@ -39,7 +43,7 @@ export class LoginComponent {
   }
   hideshowpass() {
     this.isText = !this.isText;
-    this.isText ? (this.eyeIcon = 'fa-eye') : (this.eyeIcon = 'fa-eye-slash');
+    this.isText ? (this.eyeIcon = 'fa-eye-slash') : (this.eyeIcon = 'fa-eye');
     this.isText ? (this.type = 'text') : (this.type = 'password');
   }
   UserData: any = [];
@@ -48,7 +52,6 @@ export class LoginComponent {
   }
   loginTest() {
     this.spinner.show();
-    sessionStorage.clear();
     if (this.login.valid && this.selectedCompany) {
       this.profile.storePassword(this.login.value.Password)
       this.profile.verifyProfile(this.login.value).subscribe({
@@ -60,8 +63,9 @@ export class LoginComponent {
             this.profile.SyncStatus(this.UserData).subscribe({
               next: (res) => {
                 sessionStorage.removeItem('Password')
-                debugger
-                this.profile.storeCompanyName(res.qbCompanyName)
+                if (res.qbCompanyName && res.qbCompanyName != "undefined" && res.qbCompanyName != "") {
+                  this.profile.storeCompanyName(res.qbCompanyName)
+                }
                 if (res.status == 'sync') {
                   this.toast.success({
                     detail: 'SUCCESS',
@@ -121,6 +125,20 @@ export class LoginComponent {
       this.toast.error({
         detail: 'Error',
         summary: 'Invalid Credentials',
+        duration: 2000,
+      });
+    } else if (!this.selectedCompany) {
+      this.spinner.hide();
+      this.toast.error({
+        detail: 'Error',
+        summary: 'Select Company',
+        duration: 2000,
+      });
+    } else {
+      this.spinner.hide();
+      this.toast.error({
+        detail: 'Error',
+        summary: 'Some error occurred try again',
         duration: 2000,
       });
     }

@@ -39,6 +39,7 @@ export class LoginServiceService {
     sessionStorage.getItem('AccessToken')
   }
   storeCompanyName(company: any) {
+    debugger
     sessionStorage.setItem('Company', company)
   }
   getCompanyName() {

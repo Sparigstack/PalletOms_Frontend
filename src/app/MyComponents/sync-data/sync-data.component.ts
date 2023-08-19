@@ -38,7 +38,9 @@ export class SyncDataComponent {
                 this.totalCount = res.data.progressPkg;
               },
               error: (err) => {
-
+                this.spinner.hide()
+                this.toast.error({ detail: "Error", summary: "Something went wrong", duration: 2000 })
+                throw Error(err)
               }
             })
           }
@@ -60,35 +62,42 @@ export class SyncDataComponent {
   }
   refreshData() {
     this.spinner.show()
-    this.syncData.getSyncDataCount(this.username, false).subscribe((res) => {
-      this.spinner.hide()
-      if (res.data.progressPkg && res.data.progressPkg.length > 0) {
-        for (let i = 0; i < res.data.progressPkg.length; i++) {
-          if (res.data.progressPkg[i].pkg && res.data.progressPkg[i].pkg.length > 0) {
-            for (let j = 0; j < res.data.progressPkg[i].pkg.length; j++) {
-              this.syncCount[i].pkg[j].processCount = res.data.progressPkg[i].pkg[j].processCount
-              this.syncCount.forEach((syncItem: any, i: any) => {
-                syncItem.pkg.forEach((pkgItem: any, j: any) => {
-                  const totalCount = pkgItem.totalCount;
-                  const processCount = res.data.progressPkg[i].pkg[j].processCount;
-
-                  if (totalCount === processCount) {
-                    this.allItems = true
-                  } else {
-                    this.allItems = false
-                  }
-                });
-              });
+    this.syncData.getSyncDataCount(this.username, false).subscribe({
+      next: (res) => {
+        this.spinner.hide()
+        if (res.data.progressPkg && res.data.progressPkg.length > 0) {
+          for (let i = 0; i < res.data.progressPkg.length; i++) {
+            if (res.data.progressPkg[i].pkg && res.data.progressPkg[i].pkg.length > 0) {
+              for (let j = 0; j < res.data.progressPkg[i].pkg.length; j++) {
+                this.syncCount[i].pkg[j].processCount = res.data.progressPkg[i].pkg[j].processCount
+              }
             }
           }
+
+          for (let i = 0; i < res.data.progressPkg.length; i++) {
+            if (res.data.progressPkg[i].pkg && res.data.progressPkg[i].pkg.length > 0) {
+              for (let j = 0; j < res.data.progressPkg[i].pkg.length; j++) {
+                if (this.syncCount[i].pkg[j].totalCount != res.data.progressPkg[i].pkg[j].processCount) {
+                  this.allItems = false;
+                  break
+                }
+              }
+            }
+            if (!this.allItems) {
+              break
+            }
+          }
+
         }
-      }
-      if (this.allItems) {
-        this.refBtn = "none"
-        this.bkBtn = "flex"
-      } else {
-        this.refBtn = "flex"
-        this.bkBtn = "none"
+        if (this.allItems) {
+          this.refBtn = "none"
+          this.bkBtn = "flex"
+        } else {
+          this.refBtn = "flex"
+          this.bkBtn = "none"
+        }
+      }, error: (err) => {
+        throw Error(err)
       }
     })
   }

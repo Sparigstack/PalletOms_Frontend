@@ -20,8 +20,12 @@ export class SyncHeaderComponent {
     this.UserData = { "Username": this.UserName, "AccessToken": "", "CompanyId": "", "SsnNo": "", "Password": "" }
     this.login.SyncStatus(this.UserData).subscribe({
       next: (res) => {
-        this.login.storeCompanyName(res.qbCompanyName)
-        this.Company = res.qbCompanyName
+        if (res.qbCompanyName && res.qbCompanyName != "undefined" && res.qbCompanyName != "") {
+          this.login.storeCompanyName(res.qbCompanyName)
+          this.Company = res.qbCompanyName
+        }
+      }, error: (err) => {
+        throw Error(err)
       }
     })
 

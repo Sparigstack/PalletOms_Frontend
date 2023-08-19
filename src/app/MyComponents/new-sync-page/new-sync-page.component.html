@@ -19,11 +19,11 @@
                         </div>
                         <div class="panel-body p-3 px-0 pt-2" style="color: #1b3468;justify-content: start;">
                             <div class="row m-0 px-3 d-flex justify-content-end">
-                                LastSyncDate : {{syncCount.lastSyncDate | date:'dd-MM-yyyy'}}
+                                LastSyncDate : {{totalCount | date:'dd-MM-yyyy'}}
                             </div>
                             <!-- <h5 class="setcenter">Modules that you have Synced are as below:</h5> -->
                             <div class="row mx-3 pt-3 ">
-                                <div *ngFor="let item of syncCount.moduleSyncpkg" class="col-6 pb-5 px-3">
+                                <div *ngFor="let item of syncCount" class="col-6 pb-5 px-3">
                                     <div class="col-12 text-start bg-aliceblue ps-4 py-2">
                                         <h4 class="m-0">{{item.moduleName}}</h4>
                                     </div>

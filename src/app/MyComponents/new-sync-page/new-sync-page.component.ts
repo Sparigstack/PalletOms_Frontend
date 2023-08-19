@@ -20,8 +20,10 @@ export class NewSyncPageComponent {
       next: (res) => {
         this.loading = ""
         this.spinner.hide()
-        this.syncCount = res.data;
-        this.totalCount = res.data;
+        this.syncCount = res.data.moduleSyncpkg;
+        this.totalCount = res.data.lastSyncDate;
+      }, error: (err) => {
+        throw Error(err)
       }
     })
   }
