@@ -154,7 +154,6 @@ export class SyncPageComponent implements OnInit {
     this.syncData.getSyncData(this.UserId).subscribe({
       next: (res) => {
         this.loading = ""
-        this.spinner.hide()
         this.frequency = res.package.interval
         if (res.package.quickBookCompanyName && res.package.quickBookCompanyName != "undefined" && res.package.quickBookCompanyName != "") {
           this.login.storeCompanyName(res.package.quickBookCompanyName)
@@ -173,6 +172,7 @@ export class SyncPageComponent implements OnInit {
           this.savebtn = 'none';
           this.updatebtn = '';
         }
+        this.spinner.hide()
       }, error: (err) => {
         throw Error(err)
       }

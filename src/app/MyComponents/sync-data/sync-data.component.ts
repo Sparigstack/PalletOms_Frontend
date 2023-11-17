@@ -20,17 +20,17 @@ export class SyncDataComponent {
     this.syncData.getSyncDataCount(this.UserID, true).subscribe({
       next: (res) => {
         this.loading = ""
-        this.spinner.hide()
         this.syncCount = res.data.progressPkg;
         this.totalCount = res.data.progressPkg;
+        this.spinner.hide()
       },
       error: (err) => {
         this.syncData.getSyncDataCount(this.UserID, true).subscribe({
           next: (res) => {
             this.loading = ""
-            this.spinner.hide()
             this.syncCount = res.data.progressPkg;
             this.totalCount = res.data.progressPkg;
+            this.spinner.hide()
           }, error: (err) => {
             this.syncData.getSyncDataCount(this.UserID, true).subscribe({
               next: (res) => {
@@ -66,7 +66,6 @@ export class SyncDataComponent {
     this.spinner.show()
     this.syncData.getSyncDataCount(this.UserID, false).subscribe({
       next: (res) => {
-        this.spinner.hide()
         if (res.data.progressPkg && res.data.progressPkg.length > 0) {
           for (let i = 0; i < res.data.progressPkg.length; i++) {
             if (res.data.progressPkg[i].pkg && res.data.progressPkg[i].pkg.length > 0) {
@@ -98,6 +97,7 @@ export class SyncDataComponent {
           this.refBtn = "flex"
           this.bkBtn = "none"
         }
+        this.spinner.hide()
       }, error: (err) => {
         throw Error(err)
       }
