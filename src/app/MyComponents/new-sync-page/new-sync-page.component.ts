@@ -21,9 +21,9 @@ export class NewSyncPageComponent {
     this.syncData.getTotalCount(this.USerID).subscribe({
       next: (res) => {
         this.loading = ""
-        this.spinner.hide()
         this.syncCount = res.data.moduleSyncpkg;
         this.totalCount = res.data.lastSyncDate;
+        this.spinner.hide()
       }, error: (err) => {
         throw Error(err)
       }

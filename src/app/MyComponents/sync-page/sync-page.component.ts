@@ -23,8 +23,6 @@ export class SyncPageComponent implements OnInit {
   max: any = 100;
   loading: any = "none";
   onChangeInput($event: any) {
-
-
     var id: any
     if ($event.target.dataset.parentid) {
       id = ($event.target.dataset.parentid.split(","))
@@ -137,9 +135,9 @@ export class SyncPageComponent implements OnInit {
       });
 
     }
-
-
-
+    this.syncDatas.forEach((s: any) => {
+      setTimeout(() => this.applyCheckboxDisablingLogic(s), 0);
+    });
   }
   parentselector: boolean = false;
   constructor(
@@ -188,6 +186,7 @@ export class SyncPageComponent implements OnInit {
         const checkboxes = document.querySelectorAll(`[id="${parentID}"][value="1"]`);
         checkboxes.forEach((checkbox: any) => {
           checkbox.disabled = true;
+          checkbox.checked = true;
         });
       });
     }
@@ -197,6 +196,7 @@ export class SyncPageComponent implements OnInit {
         const checkboxes = document.querySelectorAll(`[id="${parentID}"][value="2"]`);
         checkboxes.forEach((checkbox: any) => {
           checkbox.disabled = true;
+          checkbox.checked = true;
         });
       });
     }
@@ -206,6 +206,7 @@ export class SyncPageComponent implements OnInit {
         const checkboxes = document.querySelectorAll(`[id="${parentID}"][value="3"]`);
         checkboxes.forEach((checkbox: any) => {
           checkbox.disabled = true;
+          checkbox.checked = true;
         });
       });
     }
